@@ -1,7 +1,6 @@
 const Genero = require('../models/Genero');
 const Media = require('../models/Media');
 
-// Obtener todos los géneros
 const getGeneros = async (req, res) => {
     try {
         const { estado } = req.query;
@@ -18,13 +17,12 @@ const getGeneros = async (req, res) => {
     } catch (error) {
         return res.status(500).json({
             ok: false,
-            message: 'Error al consultar géneros',
+            message: 'Error al consultar generos',
             error: error.message
         });
     }
 };
 
-// Obtener un género por ID
 const getGeneroById = async (req, res) => {
     try {
         const { id } = req.params;
@@ -32,7 +30,7 @@ const getGeneroById = async (req, res) => {
         if (!genero) {
             return res.status(404).json({
                 ok: false,
-                message: `No se encontró ningún género con el ID: ${id}`
+                message: `No se encontro el genero con ID: ${id}`
             });
         }
         return res.status(200).json({
@@ -42,13 +40,12 @@ const getGeneroById = async (req, res) => {
     } catch (error) {
         return res.status(500).json({
             ok: false,
-            message: 'Error al buscar el género',
+            message: 'Error al buscar el genero',
             error: error.message
         });
     }
 };
 
-// Crear un género
 const createGenero = async (req, res) => {
     try {
         const { nombre, estado, descripcion } = req.body;
@@ -64,7 +61,7 @@ const createGenero = async (req, res) => {
         if (existeGenero) {
             return res.status(400).json({
                 ok: false,
-                message: `El género con nombre "${nombre}" ya existe`
+                message: `El genero con nombre "${nombre}" ya existe`
             });
         }
 
@@ -79,19 +76,18 @@ const createGenero = async (req, res) => {
         const generoGuardado = await nuevoGenero.save();
         return res.status(201).json({
             ok: true,
-            message: 'Género creado exitosamente',
+            message: 'Genero creado exitosamente',
             data: generoGuardado
         });
     } catch (error) {
         return res.status(500).json({
             ok: false,
-            message: 'Error al crear el género',
+            message: 'Error al crear el genero',
             error: error.message
         });
     }
 };
 
-// Actualizar un género
 const updateGenero = async (req, res) => {
     try {
         const { id } = req.params;
@@ -101,7 +97,7 @@ const updateGenero = async (req, res) => {
         if (!genero) {
             return res.status(404).json({
                 ok: false,
-                message: `No se encontró ningún género con el ID: ${id}`
+                message: `No se encontro el genero con ID: ${id}`
             });
         }
 
@@ -113,7 +109,7 @@ const updateGenero = async (req, res) => {
             if (nombreDuplicado) {
                 return res.status(400).json({
                     ok: false,
-                    message: `Ya existe otro género con el nombre "${nombre}"`
+                    message: `Ya existe otro genero con el nombre "${nombre}"`
                 });
             }
             genero.nombre = nombre.trim();
@@ -123,7 +119,7 @@ const updateGenero = async (req, res) => {
             if (!['Activo', 'Inactivo'].includes(estado)) {
                 return res.status(400).json({
                     ok: false,
-                    message: 'El estado debe ser "Activo" o "Inactivo"'
+                    message: 'El estado debe ser Activo o Inactivo'
                 });
             }
             genero.estado = estado;
@@ -138,19 +134,18 @@ const updateGenero = async (req, res) => {
 
         return res.status(200).json({
             ok: true,
-            message: 'Género actualizado exitosamente',
+            message: 'Genero actualizado exitosamente',
             data: generoActualizado
         });
     } catch (error) {
         return res.status(500).json({
             ok: false,
-            message: 'Error al actualizar el género',
+            message: 'Error al actualizar el genero',
             error: error.message
         });
     }
 };
 
-// Eliminar un género
 const deleteGenero = async (req, res) => {
     try {
         const { id } = req.params;
@@ -159,28 +154,27 @@ const deleteGenero = async (req, res) => {
         if (!genero) {
             return res.status(404).json({
                 ok: false,
-                message: `No se encontró ningún género con el ID: ${id}`
+                message: `No se encontro el genero con ID: ${id}`
             });
         }
 
-        // Validar si está en uso en Media
         const enUso = await Media.findOne({ genero: id });
         if (enUso) {
             return res.status(400).json({
                 ok: false,
-                message: 'No se puede eliminar el género porque está asociado a una o más películas/series (Media)'
+                message: 'No se puede eliminar el genero porque esta asociado a una o mas producciones'
             });
         }
 
         await Genero.findByIdAndDelete(id);
         return res.status(200).json({
             ok: true,
-            message: 'Género eliminado exitosamente'
+            message: 'Genero eliminado exitosamente'
         });
     } catch (error) {
         return res.status(500).json({
             ok: false,
-            message: 'Error al eliminar el género',
+            message: 'Error al eliminar el genero',
             error: error.message
         });
     }

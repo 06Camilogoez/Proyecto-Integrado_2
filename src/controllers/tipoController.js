@@ -1,7 +1,6 @@
 const Tipo = require('../models/Tipo');
 const Media = require('../models/Media');
 
-// Obtener todos los tipos
 const getTipos = async (req, res) => {
     try {
         const tipos = await Tipo.find().sort({ fechaCreacion: -1 });
@@ -19,7 +18,6 @@ const getTipos = async (req, res) => {
     }
 };
 
-// Obtener tipo por ID
 const getTipoById = async (req, res) => {
     try {
         const { id } = req.params;
@@ -27,7 +25,7 @@ const getTipoById = async (req, res) => {
         if (!tipo) {
             return res.status(404).json({
                 ok: false,
-                message: `No se encontró ningún tipo con el ID: ${id}`
+                message: `No se encontro el tipo con ID: ${id}`
             });
         }
         return res.status(200).json({
@@ -43,7 +41,6 @@ const getTipoById = async (req, res) => {
     }
 };
 
-// Crear tipo
 const createTipo = async (req, res) => {
     try {
         const { nombre, descripcion } = req.body;
@@ -73,7 +70,7 @@ const createTipo = async (req, res) => {
         const tipoGuardado = await nuevoTipo.save();
         return res.status(201).json({
             ok: true,
-            message: 'Tipo multimedia creado exitosamente',
+            message: 'Tipo creado exitosamente',
             data: tipoGuardado
         });
     } catch (error) {
@@ -85,7 +82,6 @@ const createTipo = async (req, res) => {
     }
 };
 
-// Actualizar tipo
 const updateTipo = async (req, res) => {
     try {
         const { id } = req.params;
@@ -95,7 +91,7 @@ const updateTipo = async (req, res) => {
         if (!tipo) {
             return res.status(404).json({
                 ok: false,
-                message: `No se encontró ningún tipo con el ID: ${id}`
+                message: `No se encontro el tipo con ID: ${id}`
             });
         }
 
@@ -122,7 +118,7 @@ const updateTipo = async (req, res) => {
 
         return res.status(200).json({
             ok: true,
-            message: 'Tipo multimedia actualizado exitosamente',
+            message: 'Tipo actualizado exitosamente',
             data: tipoActualizado
         });
     } catch (error) {
@@ -134,7 +130,6 @@ const updateTipo = async (req, res) => {
     }
 };
 
-// Eliminar tipo
 const deleteTipo = async (req, res) => {
     try {
         const { id } = req.params;
@@ -143,7 +138,7 @@ const deleteTipo = async (req, res) => {
         if (!tipo) {
             return res.status(404).json({
                 ok: false,
-                message: `No se encontró ningún tipo con el ID: ${id}`
+                message: `No se encontro el tipo con ID: ${id}`
             });
         }
 
@@ -151,14 +146,14 @@ const deleteTipo = async (req, res) => {
         if (enUso) {
             return res.status(400).json({
                 ok: false,
-                message: 'No se puede eliminar el tipo porque está asociado a una o más películas/series (Media)'
+                message: 'No se puede eliminar el tipo porque esta asociado a una o mas producciones'
             });
         }
 
         await Tipo.findByIdAndDelete(id);
         return res.status(200).json({
             ok: true,
-            message: 'Tipo multimedia eliminado exitosamente'
+            message: 'Tipo eliminado exitosamente'
         });
     } catch (error) {
         return res.status(500).json({

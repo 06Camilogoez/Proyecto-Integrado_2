@@ -1,7 +1,6 @@
 const Director = require('../models/Director');
 const Media = require('../models/Media');
 
-// Obtener todos los directores
 const getDirectores = async (req, res) => {
     try {
         const { estado } = req.query;
@@ -24,7 +23,6 @@ const getDirectores = async (req, res) => {
     }
 };
 
-// Obtener director por ID
 const getDirectorById = async (req, res) => {
     try {
         const { id } = req.params;
@@ -32,7 +30,7 @@ const getDirectorById = async (req, res) => {
         if (!director) {
             return res.status(404).json({
                 ok: false,
-                message: `No se encontró ningún director con el ID: ${id}`
+                message: `No se encontro el director con ID: ${id}`
             });
         }
         return res.status(200).json({
@@ -48,7 +46,6 @@ const getDirectorById = async (req, res) => {
     }
 };
 
-// Crear director
 const createDirector = async (req, res) => {
     try {
         const { nombres, estado } = req.body;
@@ -82,7 +79,6 @@ const createDirector = async (req, res) => {
     }
 };
 
-// Actualizar director
 const updateDirector = async (req, res) => {
     try {
         const { id } = req.params;
@@ -92,7 +88,7 @@ const updateDirector = async (req, res) => {
         if (!director) {
             return res.status(404).json({
                 ok: false,
-                message: `No se encontró ningún director con el ID: ${id}`
+                message: `No se encontro el director con ID: ${id}`
             });
         }
 
@@ -104,7 +100,7 @@ const updateDirector = async (req, res) => {
             if (!['Activo', 'Inactivo'].includes(estado)) {
                 return res.status(400).json({
                     ok: false,
-                    message: 'El estado debe ser "Activo" o "Inactivo"'
+                    message: 'El estado debe ser Activo o Inactivo'
                 });
             }
             director.estado = estado;
@@ -127,7 +123,6 @@ const updateDirector = async (req, res) => {
     }
 };
 
-// Eliminar director
 const deleteDirector = async (req, res) => {
     try {
         const { id } = req.params;
@@ -136,7 +131,7 @@ const deleteDirector = async (req, res) => {
         if (!director) {
             return res.status(404).json({
                 ok: false,
-                message: `No se encontró ningún director con el ID: ${id}`
+                message: `No se encontro el director con ID: ${id}`
             });
         }
 
@@ -144,7 +139,7 @@ const deleteDirector = async (req, res) => {
         if (enUso) {
             return res.status(400).json({
                 ok: false,
-                message: 'No se puede eliminar el director porque está asociado a una o más películas/series (Media)'
+                message: 'No se puede eliminar el director porque esta asociado a una o mas producciones'
             });
         }
 

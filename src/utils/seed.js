@@ -1,5 +1,4 @@
 require('dotenv').config();
-const mongoose = require('mongoose');
 const connectDB = require('../config/db');
 
 const Genero = require('../models/Genero');
@@ -11,7 +10,6 @@ const Media = require('../models/Media');
 const seedData = async () => {
     try {
         await connectDB();
-        console.log('[Seeder] Limpiando colecciones anteriores...');
 
         await Media.deleteMany({});
         await Genero.deleteMany({});
@@ -19,17 +17,15 @@ const seedData = async () => {
         await Productora.deleteMany({});
         await Tipo.deleteMany({});
 
-        console.log('[Seeder] Creando Géneros iniciales...');
         const generos = await Genero.insertMany([
-            { nombre: 'Acción', estado: 'Activo', descripcion: 'Películas con alto contenido de emoción y acción.' },
-            { nombre: 'Aventura', estado: 'Activo', descripcion: 'Historias de viajes, descubrimientos y desafíos.' },
-            { nombre: 'Ciencia Ficción', estado: 'Activo', descripcion: 'Relatos basados en avances científicos e hipotéticos futuros.' },
-            { nombre: 'Drama', estado: 'Activo', descripcion: 'Tramas con situaciones de conflicto emocional y humano.' },
-            { nombre: 'Terror', estado: 'Activo', descripcion: 'Producciones destinadas a generar suspenso y miedo.' },
-            { nombre: 'Comedia Clásica', estado: 'Inactivo', descripcion: 'Género temporalmente suspendido para pruebas de validación.' }
+            { nombre: 'Accion', estado: 'Activo', descripcion: 'Peliculas de accion' },
+            { nombre: 'Aventura', estado: 'Activo', descripcion: 'Peliculas de aventura' },
+            { nombre: 'Ciencia Ficcion', estado: 'Activo', descripcion: 'Peliculas de ciencia ficcion' },
+            { nombre: 'Drama', estado: 'Activo', descripcion: 'Peliculas de drama' },
+            { nombre: 'Terror', estado: 'Activo', descripcion: 'Peliculas de terror' },
+            { nombre: 'Comedia Clasica', estado: 'Inactivo', descripcion: 'Genero inactivo para pruebas' }
         ]);
 
-        console.log('[Seeder] Creando Directores iniciales...');
         const directores = await Director.insertMany([
             { nombres: 'Christopher Nolan', estado: 'Activo' },
             { nombres: 'Steven Spielberg', estado: 'Activo' },
@@ -37,51 +33,48 @@ const seedData = async () => {
             { nombres: 'Director Retirado', estado: 'Inactivo' }
         ]);
 
-        console.log('[Seeder] Creando Productoras iniciales...');
         const productoras = await Productora.insertMany([
             {
                 nombre: 'Warner Bros. Pictures',
                 estado: 'Activo',
                 slogan: 'The Stuff That Dreams Are Made Of',
-                descripcion: 'Compañía productora y distribuidora de cine y televisión.'
+                descripcion: 'Productora de cine y television'
             },
             {
                 nombre: 'Universal Pictures',
                 estado: 'Activo',
                 slogan: 'A Comcast Company',
-                descripcion: 'Uno de los estudios cinematográficos más antiguos de Estados Unidos.'
+                descripcion: 'Estudios cinematograficos'
             },
             {
                 nombre: 'Paramount Pictures',
                 estado: 'Activo',
                 slogan: 'The Mountain of Entertainment',
-                descripcion: 'Firma estadounidense de producción cinematográfica.'
+                descripcion: 'Compania de produccion'
             },
             {
-                nombre: 'Productora Inactiva Inc.',
+                nombre: 'Productora Inactiva',
                 estado: 'Inactivo',
                 slogan: 'Sin operaciones',
-                descripcion: 'Productora para pruebas de rechazo de validación.'
+                descripcion: 'Productora inactiva para pruebas'
             }
         ]);
 
-        console.log('[Seeder] Creando Tipos iniciales...');
         const tipos = await Tipo.insertMany([
-            { nombre: 'Película', descripcion: 'Producción audiovisual de largometraje individual.' },
-            { nombre: 'Serie', descripcion: 'Producción audiovisual de múltiples episodios por temporadas.' },
-            { nombre: 'Documental', descripcion: 'Producción informativa o testimonial.' }
+            { nombre: 'Pelicula', descripcion: 'Largometraje individual' },
+            { nombre: 'Serie', descripcion: 'Produccion por episodios' },
+            { nombre: 'Documental', descripcion: 'Produccion documental' }
         ]);
 
-        console.log('[Seeder] Creando Producciones Media iniciales...');
-        const generoSciFi = generos.find(g => g.nombre === 'Ciencia Ficción');
+        const generoSciFi = generos.find(g => g.nombre === 'Ciencia Ficcion');
         const directorNolan = directores.find(d => d.nombres === 'Christopher Nolan');
         const prodWarner = productoras.find(p => p.nombre === 'Warner Bros. Pictures');
-        const tipoPelicula = tipos.find(t => t.nombre === 'Película');
+        const tipoPelicula = tipos.find(t => t.nombre === 'Pelicula');
 
         await Media.create({
             serial: 'MED-2026-001',
             titulo: 'Inception',
-            sinopsis: 'Un ladrón que roba secretos corporativos mediante el uso de la tecnología de compartir sueños tiene la tarea inversa de plantar una idea en la mente de un CEO.',
+            sinopsis: 'Un ladron de secretos corporativos a traves de tecnologia de suenos.',
             url: 'https://cuevana-iudigital.edu.co/ver/inception-2010',
             imagen: 'https://image.tmdb.org/t/p/w500/o29UqKvfR1yFj6Z6V6iH7c17GvD.jpg',
             anoEstreno: 2010,
@@ -91,10 +84,10 @@ const seedData = async () => {
             tipo: tipoPelicula._id
         });
 
-        console.log('¡Datos iniciales sembrados con éxito en la base de datos!');
+        console.log('Datos iniciales cargados');
         process.exit(0);
     } catch (error) {
-        console.error('[Seeder] Error al sembrar datos:', error);
+        console.error('Error al cargar datos:', error);
         process.exit(1);
     }
 };

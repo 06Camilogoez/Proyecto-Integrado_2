@@ -1,7 +1,6 @@
 const Productora = require('../models/Productora');
 const Media = require('../models/Media');
 
-// Obtener todas las productoras
 const getProductoras = async (req, res) => {
     try {
         const { estado } = req.query;
@@ -24,7 +23,6 @@ const getProductoras = async (req, res) => {
     }
 };
 
-// Obtener productora por ID
 const getProductoraById = async (req, res) => {
     try {
         const { id } = req.params;
@@ -32,7 +30,7 @@ const getProductoraById = async (req, res) => {
         if (!productora) {
             return res.status(404).json({
                 ok: false,
-                message: `No se encontró ninguna productora con el ID: ${id}`
+                message: `No se encontro la productora con ID: ${id}`
             });
         }
         return res.status(200).json({
@@ -48,7 +46,6 @@ const getProductoraById = async (req, res) => {
     }
 };
 
-// Crear productora
 const createProductora = async (req, res) => {
     try {
         const { nombre, estado, slogan, descripcion } = req.body;
@@ -92,7 +89,6 @@ const createProductora = async (req, res) => {
     }
 };
 
-// Actualizar productora
 const updateProductora = async (req, res) => {
     try {
         const { id } = req.params;
@@ -102,7 +98,7 @@ const updateProductora = async (req, res) => {
         if (!productora) {
             return res.status(404).json({
                 ok: false,
-                message: `No se encontró ninguna productora con el ID: ${id}`
+                message: `No se encontro la productora con ID: ${id}`
             });
         }
 
@@ -124,7 +120,7 @@ const updateProductora = async (req, res) => {
             if (!['Activo', 'Inactivo'].includes(estado)) {
                 return res.status(400).json({
                     ok: false,
-                    message: 'El estado debe ser "Activo" o "Inactivo"'
+                    message: 'El estado debe ser Activo o Inactivo'
                 });
             }
             productora.estado = estado;
@@ -155,7 +151,6 @@ const updateProductora = async (req, res) => {
     }
 };
 
-// Eliminar productora
 const deleteProductora = async (req, res) => {
     try {
         const { id } = req.params;
@@ -164,7 +159,7 @@ const deleteProductora = async (req, res) => {
         if (!productora) {
             return res.status(404).json({
                 ok: false,
-                message: `No se encontró ninguna productora con el ID: ${id}`
+                message: `No se encontro la productora con ID: ${id}`
             });
         }
 
@@ -172,7 +167,7 @@ const deleteProductora = async (req, res) => {
         if (enUso) {
             return res.status(400).json({
                 ok: false,
-                message: 'No se puede eliminar la productora porque está asociada a una o más películas/series (Media)'
+                message: 'No se puede eliminar la productora porque esta asociada a una o mas producciones'
             });
         }
 

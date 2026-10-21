@@ -33,7 +33,6 @@ const generoSchema = new mongoose.Schema({
     versionKey: false
 });
 
-// Middleware para actualizar fechaActualizacion antes de guardar
 generoSchema.pre('save', function (next) {
     this.fechaActualizacion = new Date();
     next();

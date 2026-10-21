@@ -1,8 +1,8 @@
 {
 	"info": {
 		"_postman_id": "a920c69c-8847-4d74-9ab1-fb7c0fbecbf0",
-		"name": "API REST - Películas IU Digital (Proyecto Integrado II)",
-		"description": "Colección completa de pruebas para la API REST de Gestión de Películas y Series (IU Digital). Incluye los 5 módulos: Género, Director, Productora, Tipo y Media con validaciones de negocio.",
+		"name": "API REST Peliculas IU Digital",
+		"description": "Coleccion de pruebas para la API REST de peliculas y series.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"variable": [
@@ -39,7 +39,7 @@
 	],
 	"item": [
 		{
-			"name": "00. Raíz - Health Check",
+			"name": "Raiz",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -53,10 +53,10 @@
 			}
 		},
 		{
-			"name": "01. Géneros",
+			"name": "Generos",
 			"item": [
 				{
-					"name": "Listar Géneros",
+					"name": "Listar Generos",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -68,7 +68,7 @@
 					}
 				},
 				{
-					"name": "Crear Género",
+					"name": "Crear Genero",
 					"event": [
 						{
 							"listen": "test",
@@ -93,7 +93,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"nombre\": \"Animación\",\n    \"estado\": \"Activo\",\n    \"descripcion\": \"Películas y series realizadas mediante técnicas de animación y CGI.\"\n}"
+							"raw": "{\n    \"nombre\": \"Animacion\",\n    \"estado\": \"Activo\",\n    \"descripcion\": \"Peliculas animadas\"\n}"
 						},
 						"url": {
 							"raw": "{{baseUrl}}/generos",
@@ -103,7 +103,7 @@
 					}
 				},
 				{
-					"name": "Obtener Género por ID",
+					"name": "Consultar Genero por ID",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -115,7 +115,7 @@
 					}
 				},
 				{
-					"name": "Actualizar Género",
+					"name": "Actualizar Genero",
 					"request": {
 						"method": "PUT",
 						"header": [
@@ -126,7 +126,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"nombre\": \"Animación 3D\",\n    \"estado\": \"Activo\",\n    \"descripcion\": \"Actualización: Películas y series con modelado y renderizado tridimensional.\"\n}"
+							"raw": "{\n    \"nombre\": \"Animacion 3D\",\n    \"estado\": \"Activo\",\n    \"descripcion\": \"Animacion digital 3D\"\n}"
 						},
 						"url": {
 							"raw": "{{baseUrl}}/generos/{{generoId}}",
@@ -136,7 +136,7 @@
 					}
 				},
 				{
-					"name": "Eliminar Género",
+					"name": "Eliminar Genero",
 					"request": {
 						"method": "DELETE",
 						"header": [],
@@ -150,7 +150,7 @@
 			]
 		},
 		{
-			"name": "02. Directores",
+			"name": "Directores",
 			"item": [
 				{
 					"name": "Listar Directores",
@@ -200,7 +200,7 @@
 					}
 				},
 				{
-					"name": "Obtener Director por ID",
+					"name": "Consultar Director por ID",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -223,7 +223,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"nombres\": \"Guillermo del Toro Gómez\",\n    \"estado\": \"Activo\"\n}"
+							"raw": "{\n    \"nombres\": \"Guillermo del Toro Gomez\",\n    \"estado\": \"Activo\"\n}"
 						},
 						"url": {
 							"raw": "{{baseUrl}}/directores/{{directorId}}",
@@ -247,7 +247,7 @@
 			]
 		},
 		{
-			"name": "03. Productoras",
+			"name": "Productoras",
 			"item": [
 				{
 					"name": "Listar Productoras",
@@ -287,7 +287,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"nombre\": \"Sony Pictures\",\n    \"estado\": \"Activo\",\n    \"slogan\": \"Make.Believe\",\n    \"descripcion\": \"División cinematográfica de Sony Entertainment.\"\n}"
+							"raw": "{\n    \"nombre\": \"Sony Pictures\",\n    \"estado\": \"Activo\",\n    \"slogan\": \"Make.Believe\",\n    \"descripcion\": \"Estudio de cine\"\n}"
 						},
 						"url": {
 							"raw": "{{baseUrl}}/productoras",
@@ -297,7 +297,7 @@
 					}
 				},
 				{
-					"name": "Obtener Productora por ID",
+					"name": "Consultar Productora por ID",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -320,7 +320,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"nombre\": \"Sony Pictures Entertainment\",\n    \"estado\": \"Activo\",\n    \"slogan\": \"Be Moved\",\n    \"descripcion\": \"Líder global en producción y distribución cinematográfica.\"\n}"
+							"raw": "{\n    \"nombre\": \"Sony Pictures Entertainment\",\n    \"estado\": \"Activo\",\n    \"slogan\": \"Be Moved\",\n    \"descripcion\": \"Distribucion global\"\n}"
 						},
 						"url": {
 							"raw": "{{baseUrl}}/productoras/{{productoraId}}",
@@ -344,7 +344,7 @@
 			]
 		},
 		{
-			"name": "04. Tipos",
+			"name": "Tipos",
 			"item": [
 				{
 					"name": "Listar Tipos",
@@ -384,7 +384,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"nombre\": \"Cortometraje\",\n    \"descripcion\": \"Producción audiovisual con duración inferior a 30 minutos.\"\n}"
+							"raw": "{\n    \"nombre\": \"Cortometraje\",\n    \"descripcion\": \"Menor a 30 minutos\"\n}"
 						},
 						"url": {
 							"raw": "{{baseUrl}}/tipos",
@@ -394,7 +394,7 @@
 					}
 				},
 				{
-					"name": "Obtener Tipo por ID",
+					"name": "Consultar Tipo por ID",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -417,7 +417,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"nombre\": \"Cortometraje Animado\",\n    \"descripcion\": \"Cortometraje enfocado en técnicas de animación.\"\n}"
+							"raw": "{\n    \"nombre\": \"Cortometraje Animado\",\n    \"descripcion\": \"Cortometraje de animacion\"\n}"
 						},
 						"url": {
 							"raw": "{{baseUrl}}/tipos/{{tipoId}}",
@@ -441,10 +441,10 @@
 			]
 		},
 		{
-			"name": "05. Media (Películas y Series)",
+			"name": "Media",
 			"item": [
 				{
-					"name": "Listar Todas las Medias (Populate)",
+					"name": "Listar Medias",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -456,7 +456,7 @@
 					}
 				},
 				{
-					"name": "Crear Media (Válida)",
+					"name": "Crear Media",
 					"event": [
 						{
 							"listen": "test",
@@ -481,7 +481,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"serial\": \"MED-2026-999\",\n    \"titulo\": \"Interstellar\",\n    \"sinopsis\": \"Un grupo de exploradores espaciales viajan a través de un agujero de gusano en un intento desesperado por encontrar un nuevo hogar para la humanidad.\",\n    \"url\": \"https://cuevana-iudigital.edu.co/ver/interstellar-2014\",\n    \"imagen\": \"https://image.tmdb.org/t/p/w500/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg\",\n    \"anoEstreno\": 2014,\n    \"genero\": \"{{generoId}}\",\n    \"director\": \"{{directorId}}\",\n    \"productora\": \"{{productoraId}}\",\n    \"tipo\": \"{{tipoId}}\"\n}"
+							"raw": "{\n    \"serial\": \"MED-2026-999\",\n    \"titulo\": \"Interstellar\",\n    \"sinopsis\": \"Exploradores espaciales viajan a traves de un agujero de gusano.\",\n    \"url\": \"https://cuevana-iudigital.edu.co/ver/interstellar-2014\",\n    \"imagen\": \"https://image.tmdb.org/t/p/w500/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg\",\n    \"anoEstreno\": 2014,\n    \"genero\": \"{{generoId}}\",\n    \"director\": \"{{directorId}}\",\n    \"productora\": \"{{productoraId}}\",\n    \"tipo\": \"{{tipoId}}\"\n}"
 						},
 						"url": {
 							"raw": "{{baseUrl}}/medias",
@@ -491,7 +491,7 @@
 					}
 				},
 				{
-					"name": "Obtener Media por ID",
+					"name": "Consultar Media por ID",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -514,7 +514,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"titulo\": \"Interstellar (Edición Especial 4K)\",\n    \"sinopsis\": \"Versión remasterizada con contenido adicional de la obra maestra de ciencia ficción.\",\n    \"anoEstreno\": 2014\n}"
+							"raw": "{\n    \"titulo\": \"Interstellar 4K\",\n    \"sinopsis\": \"Edicion remasterizada\",\n    \"anoEstreno\": 2014\n}"
 						},
 						"url": {
 							"raw": "{{baseUrl}}/medias/{{mediaId}}",
@@ -524,7 +524,7 @@
 					}
 				},
 				{
-					"name": "Prueba Regla Negocio - Rechazo por Género/Director Inactivo",
+					"name": "Crear Media con Relacion Inactiva (Falla esperada)",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -535,7 +535,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"serial\": \"MED-FAIL-001\",\n    \"titulo\": \"Película Prueba Inactiva\",\n    \"sinopsis\": \"Esta solicitud debe ser rechazada con código 400 por violar las reglas de negocio de relaciones inactivas.\",\n    \"url\": \"https://cuevana-iudigital.edu.co/ver/prueba-inactiva\",\n    \"imagen\": \"https://ejemplo.com/poster.jpg\",\n    \"anoEstreno\": 2026,\n    \"genero\": \"ID_GENERO_INACTIVO_O_INVALIDO\",\n    \"director\": \"{{directorId}}\",\n    \"productora\": \"{{productoraId}}\",\n    \"tipo\": \"{{tipoId}}\"\n}"
+							"raw": "{\n    \"serial\": \"MED-FAIL-001\",\n    \"titulo\": \"Pelicula Rechazada\",\n    \"sinopsis\": \"Prueba de regla de negocio\",\n    \"url\": \"https://cuevana-iudigital.edu.co/ver/prueba-rechazada\",\n    \"imagen\": \"https://ejemplo.com/poster.jpg\",\n    \"anoEstreno\": 2026,\n    \"genero\": \"000000000000000000000000\",\n    \"director\": \"{{directorId}}\",\n    \"productora\": \"{{productoraId}}\",\n    \"tipo\": \"{{tipoId}}\"\n}"
 						},
 						"url": {
 							"raw": "{{baseUrl}}/medias",

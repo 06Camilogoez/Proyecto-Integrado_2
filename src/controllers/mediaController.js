@@ -4,7 +4,6 @@ const Director = require('../models/Director');
 const Productora = require('../models/Productora');
 const Tipo = require('../models/Tipo');
 
-// Obtener todas las producciones (Películas y series)
 const getMedias = async (req, res) => {
     try {
         const medias = await Media.find()
@@ -22,13 +21,12 @@ const getMedias = async (req, res) => {
     } catch (error) {
         return res.status(500).json({
             ok: false,
-            message: 'Error al consultar producciones multimedia',
+            message: 'Error al consultar producciones',
             error: error.message
         });
     }
 };
 
-// Obtener una producción por ID
 const getMediaById = async (req, res) => {
     try {
         const { id } = req.params;
@@ -41,7 +39,7 @@ const getMediaById = async (req, res) => {
         if (!media) {
             return res.status(404).json({
                 ok: false,
-                message: `No se encontró ninguna producción multimedia con el ID: ${id}`
+                message: `No se encontro la produccion con ID: ${id}`
             });
         }
 
@@ -52,59 +50,53 @@ const getMediaById = async (req, res) => {
     } catch (error) {
         return res.status(500).json({
             ok: false,
-            message: 'Error al buscar la producción multimedia',
+            message: 'Error al buscar la produccion',
             error: error.message
         });
     }
 };
 
-// Validaciones auxiliares de negocio
 const validarRelacionesActivas = async ({ generoId, directorId, productoraId, tipoId }) => {
-    // 1. Validar Género (debe existir y estar Activo)
     if (generoId) {
         const genero = await Genero.findById(generoId);
         if (!genero) {
-            return { valido: false, mensaje: `El género con ID ${generoId} no existe en el sistema` };
+            return { valido: false, mensaje: `El genero con ID ${generoId} no existe` };
         }
         if (genero.estado !== 'Activo') {
-            return { valido: false, mensaje: `El género "${genero.nombre}" se encuentra Inactivo. Solo se permiten géneros activos para crear o asignar a una producción` };
+            return { valido: false, mensaje: `El genero "${genero.nombre}" no esta activo` };
         }
     }
 
-    // 2. Validar Director (debe existir y estar Activo)
     if (directorId) {
         const director = await Director.findById(directorId);
         if (!director) {
-            return { valido: false, mensaje: `El director con ID ${directorId} no existe en el sistema` };
+            return { valido: false, mensaje: `El director con ID ${directorId} no existe` };
         }
         if (director.estado !== 'Activo') {
-            return { valido: false, mensaje: `El director "${director.nombres}" se encuentra Inactivo. Solo se permiten directores activos para crear o asignar a una producción` };
+            return { valido: false, mensaje: `El director "${director.nombres}" no esta activo` };
         }
     }
 
-    // 3. Validar Productora (debe existir y estar Activa)
     if (productoraId) {
         const productora = await Productora.findById(productoraId);
         if (!productora) {
-            return { valido: false, mensaje: `La productora con ID ${productoraId} no existe en el sistema` };
+            return { valido: false, mensaje: `La productora con ID ${productoraId} no existe` };
         }
         if (productora.estado !== 'Activo') {
-            return { valido: false, mensaje: `La productora "${productora.nombre}" se encuentra Inactiva. Solo se permiten productoras activas para crear o asignar a una producción` };
+            return { valido: false, mensaje: `La productora "${productora.nombre}" no esta activa` };
         }
     }
 
-    // 4. Validar Tipo (debe existir en el sistema)
     if (tipoId) {
         const tipo = await Tipo.findById(tipoId);
         if (!tipo) {
-            return { valido: false, mensaje: `El tipo multimedia con ID ${tipoId} no existe en el sistema` };
+            return { valido: false, mensaje: `El tipo con ID ${tipoId} no existe` };
         }
     }
 
     return { valido: true };
 };
 
-// Crear nueva producción multimedia
 const createMedia = async (req, res) => {
     try {
         const {
@@ -120,33 +112,29 @@ const createMedia = async (req, res) => {
             tipo
         } = req.body;
 
-        // Validaciones de campos obligatorios
         if (!serial || !titulo || !sinopsis || !url || !anoEstreno || !genero || !director || !productora || !tipo) {
             return res.status(400).json({
                 ok: false,
-                message: 'Los siguientes campos son requeridos: serial, titulo, sinopsis, url, anoEstreno, genero, director, productora, tipo'
+                message: 'Todos los campos son requeridos'
             });
         }
 
-        // Validar unicidad de Serial
         const existeSerial = await Media.findOne({ serial: serial.trim() });
         if (existeSerial) {
             return res.status(400).json({
                 ok: false,
-                message: `Ya existe una producción con el serial "${serial}"`
+                message: `El serial "${serial}" ya esta registrado`
             });
         }
 
-        // Validar unicidad de URL
         const existeUrl = await Media.findOne({ url: url.trim() });
         if (existeUrl) {
             return res.status(400).json({
                 ok: false,
-                message: `Ya existe una producción con la URL "${url}"`
+                message: `La URL "${url}" ya esta registrada`
             });
         }
 
-        // Validar reglas de negocio sobre relaciones
         const validacion = await validarRelacionesActivas({
             generoId: genero,
             directorId: director,
@@ -185,19 +173,18 @@ const createMedia = async (req, res) => {
 
         return res.status(201).json({
             ok: true,
-            message: 'Producción multimedia creada exitosamente',
+            message: 'Produccion creada exitosamente',
             data: mediaPoblada
         });
     } catch (error) {
         return res.status(500).json({
             ok: false,
-            message: 'Error al crear la producción multimedia',
+            message: 'Error al crear la produccion',
             error: error.message
         });
     }
 };
 
-// Actualizar producción multimedia
 const updateMedia = async (req, res) => {
     try {
         const { id } = req.params;
@@ -218,35 +205,32 @@ const updateMedia = async (req, res) => {
         if (!media) {
             return res.status(404).json({
                 ok: false,
-                message: `No se encontró ninguna producción con el ID: ${id}`
+                message: `No se encontro la produccion con ID: ${id}`
             });
         }
 
-        // Validar unicidad de serial si se modifica
         if (serial && serial.trim() !== media.serial) {
             const serialDuplicado = await Media.findOne({ _id: { $ne: id }, serial: serial.trim() });
             if (serialDuplicado) {
                 return res.status(400).json({
                     ok: false,
-                    message: `Ya existe otra producción con el serial "${serial}"`
+                    message: `El serial "${serial}" ya pertenece a otra produccion`
                 });
             }
             media.serial = serial.trim();
         }
 
-        // Validar unicidad de URL si se modifica
         if (url && url.trim() !== media.url) {
             const urlDuplicada = await Media.findOne({ _id: { $ne: id }, url: url.trim() });
             if (urlDuplicada) {
                 return res.status(400).json({
                     ok: false,
-                    message: `Ya existe otra producción con la URL "${url}"`
+                    message: `La URL "${url}" ya pertenece a otra produccion`
                 });
             }
             media.url = url.trim();
         }
 
-        // Validar relaciones activas si se actualizan
         const validacion = await validarRelacionesActivas({
             generoId: genero,
             directorId: director,
@@ -281,19 +265,18 @@ const updateMedia = async (req, res) => {
 
         return res.status(200).json({
             ok: true,
-            message: 'Producción multimedia actualizada exitosamente',
+            message: 'Produccion actualizada exitosamente',
             data: mediaPoblada
         });
     } catch (error) {
         return res.status(500).json({
             ok: false,
-            message: 'Error al actualizar la producción multimedia',
+            message: 'Error al actualizar la produccion',
             error: error.message
         });
     }
 };
 
-// Eliminar producción multimedia
 const deleteMedia = async (req, res) => {
     try {
         const { id } = req.params;
@@ -302,19 +285,19 @@ const deleteMedia = async (req, res) => {
         if (!media) {
             return res.status(404).json({
                 ok: false,
-                message: `No se encontró ninguna producción con el ID: ${id}`
+                message: `No se encontro la produccion con ID: ${id}`
             });
         }
 
         await Media.findByIdAndDelete(id);
         return res.status(200).json({
             ok: true,
-            message: 'Producción multimedia eliminada exitosamente'
+            message: 'Produccion eliminada exitosamente'
         });
     } catch (error) {
         return res.status(500).json({
             ok: false,
-            message: 'Error al eliminar la producción multimedia',
+            message: 'Error al eliminar la produccion',
             error: error.message
         });
     }
