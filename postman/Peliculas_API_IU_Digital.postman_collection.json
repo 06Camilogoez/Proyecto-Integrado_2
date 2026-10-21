@@ -1,0 +1,562 @@
+{
+	"info": {
+		"_postman_id": "a920c69c-8847-4d74-9ab1-fb7c0fbecbf0",
+		"name": "API REST - Películas IU Digital (Proyecto Integrado II)",
+		"description": "Colección completa de pruebas para la API REST de Gestión de Películas y Series (IU Digital). Incluye los 5 módulos: Género, Director, Productora, Tipo y Media con validaciones de negocio.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:4000/api",
+			"type": "string"
+		},
+		{
+			"key": "generoId",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "directorId",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "productoraId",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "tipoId",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "mediaId",
+			"value": "",
+			"type": "string"
+		}
+	],
+	"item": [
+		{
+			"name": "00. Raíz - Health Check",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4000/",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "4000",
+					"path": [""]
+				}
+			}
+		},
+		{
+			"name": "01. Géneros",
+			"item": [
+				{
+					"name": "Listar Géneros",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/generos",
+							"host": ["{{baseUrl}}"],
+							"path": ["generos"]
+						}
+					}
+				},
+				{
+					"name": "Crear Género",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"if(jsonData.data && jsonData.data._id) {",
+									"    pm.collectionVariables.set('generoId', jsonData.data._id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre\": \"Animación\",\n    \"estado\": \"Activo\",\n    \"descripcion\": \"Películas y series realizadas mediante técnicas de animación y CGI.\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/generos",
+							"host": ["{{baseUrl}}"],
+							"path": ["generos"]
+						}
+					}
+				},
+				{
+					"name": "Obtener Género por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/generos/{{generoId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["generos", "{{generoId}}"]
+						}
+					}
+				},
+				{
+					"name": "Actualizar Género",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre\": \"Animación 3D\",\n    \"estado\": \"Activo\",\n    \"descripcion\": \"Actualización: Películas y series con modelado y renderizado tridimensional.\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/generos/{{generoId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["generos", "{{generoId}}"]
+						}
+					}
+				},
+				{
+					"name": "Eliminar Género",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/generos/{{generoId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["generos", "{{generoId}}"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "02. Directores",
+			"item": [
+				{
+					"name": "Listar Directores",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/directores",
+							"host": ["{{baseUrl}}"],
+							"path": ["directores"]
+						}
+					}
+				},
+				{
+					"name": "Crear Director",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"if(jsonData.data && jsonData.data._id) {",
+									"    pm.collectionVariables.set('directorId', jsonData.data._id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombres\": \"Guillermo del Toro\",\n    \"estado\": \"Activo\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/directores",
+							"host": ["{{baseUrl}}"],
+							"path": ["directores"]
+						}
+					}
+				},
+				{
+					"name": "Obtener Director por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/directores/{{directorId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["directores", "{{directorId}}"]
+						}
+					}
+				},
+				{
+					"name": "Actualizar Director",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombres\": \"Guillermo del Toro Gómez\",\n    \"estado\": \"Activo\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/directores/{{directorId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["directores", "{{directorId}}"]
+						}
+					}
+				},
+				{
+					"name": "Eliminar Director",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/directores/{{directorId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["directores", "{{directorId}}"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "03. Productoras",
+			"item": [
+				{
+					"name": "Listar Productoras",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/productoras",
+							"host": ["{{baseUrl}}"],
+							"path": ["productoras"]
+						}
+					}
+				},
+				{
+					"name": "Crear Productora",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"if(jsonData.data && jsonData.data._id) {",
+									"    pm.collectionVariables.set('productoraId', jsonData.data._id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre\": \"Sony Pictures\",\n    \"estado\": \"Activo\",\n    \"slogan\": \"Make.Believe\",\n    \"descripcion\": \"División cinematográfica de Sony Entertainment.\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/productoras",
+							"host": ["{{baseUrl}}"],
+							"path": ["productoras"]
+						}
+					}
+				},
+				{
+					"name": "Obtener Productora por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/productoras/{{productoraId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["productoras", "{{productoraId}}"]
+						}
+					}
+				},
+				{
+					"name": "Actualizar Productora",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre\": \"Sony Pictures Entertainment\",\n    \"estado\": \"Activo\",\n    \"slogan\": \"Be Moved\",\n    \"descripcion\": \"Líder global en producción y distribución cinematográfica.\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/productoras/{{productoraId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["productoras", "{{productoraId}}"]
+						}
+					}
+				},
+				{
+					"name": "Eliminar Productora",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/productoras/{{productoraId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["productoras", "{{productoraId}}"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "04. Tipos",
+			"item": [
+				{
+					"name": "Listar Tipos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/tipos",
+							"host": ["{{baseUrl}}"],
+							"path": ["tipos"]
+						}
+					}
+				},
+				{
+					"name": "Crear Tipo",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"if(jsonData.data && jsonData.data._id) {",
+									"    pm.collectionVariables.set('tipoId', jsonData.data._id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre\": \"Cortometraje\",\n    \"descripcion\": \"Producción audiovisual con duración inferior a 30 minutos.\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/tipos",
+							"host": ["{{baseUrl}}"],
+							"path": ["tipos"]
+						}
+					}
+				},
+				{
+					"name": "Obtener Tipo por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/tipos/{{tipoId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["tipos", "{{tipoId}}"]
+						}
+					}
+				},
+				{
+					"name": "Actualizar Tipo",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre\": \"Cortometraje Animado\",\n    \"descripcion\": \"Cortometraje enfocado en técnicas de animación.\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/tipos/{{tipoId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["tipos", "{{tipoId}}"]
+						}
+					}
+				},
+				{
+					"name": "Eliminar Tipo",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/tipos/{{tipoId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["tipos", "{{tipoId}}"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "05. Media (Películas y Series)",
+			"item": [
+				{
+					"name": "Listar Todas las Medias (Populate)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/medias",
+							"host": ["{{baseUrl}}"],
+							"path": ["medias"]
+						}
+					}
+				},
+				{
+					"name": "Crear Media (Válida)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"if(jsonData.data && jsonData.data._id) {",
+									"    pm.collectionVariables.set('mediaId', jsonData.data._id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"serial\": \"MED-2026-999\",\n    \"titulo\": \"Interstellar\",\n    \"sinopsis\": \"Un grupo de exploradores espaciales viajan a través de un agujero de gusano en un intento desesperado por encontrar un nuevo hogar para la humanidad.\",\n    \"url\": \"https://cuevana-iudigital.edu.co/ver/interstellar-2014\",\n    \"imagen\": \"https://image.tmdb.org/t/p/w500/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg\",\n    \"anoEstreno\": 2014,\n    \"genero\": \"{{generoId}}\",\n    \"director\": \"{{directorId}}\",\n    \"productora\": \"{{productoraId}}\",\n    \"tipo\": \"{{tipoId}}\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/medias",
+							"host": ["{{baseUrl}}"],
+							"path": ["medias"]
+						}
+					}
+				},
+				{
+					"name": "Obtener Media por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/medias/{{mediaId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["medias", "{{mediaId}}"]
+						}
+					}
+				},
+				{
+					"name": "Actualizar Media",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"titulo\": \"Interstellar (Edición Especial 4K)\",\n    \"sinopsis\": \"Versión remasterizada con contenido adicional de la obra maestra de ciencia ficción.\",\n    \"anoEstreno\": 2014\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/medias/{{mediaId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["medias", "{{mediaId}}"]
+						}
+					}
+				},
+				{
+					"name": "Prueba Regla Negocio - Rechazo por Género/Director Inactivo",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"serial\": \"MED-FAIL-001\",\n    \"titulo\": \"Película Prueba Inactiva\",\n    \"sinopsis\": \"Esta solicitud debe ser rechazada con código 400 por violar las reglas de negocio de relaciones inactivas.\",\n    \"url\": \"https://cuevana-iudigital.edu.co/ver/prueba-inactiva\",\n    \"imagen\": \"https://ejemplo.com/poster.jpg\",\n    \"anoEstreno\": 2026,\n    \"genero\": \"ID_GENERO_INACTIVO_O_INVALIDO\",\n    \"director\": \"{{directorId}}\",\n    \"productora\": \"{{productoraId}}\",\n    \"tipo\": \"{{tipoId}}\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/medias",
+							"host": ["{{baseUrl}}"],
+							"path": ["medias"]
+						}
+					}
+				},
+				{
+					"name": "Eliminar Media",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/medias/{{mediaId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["medias", "{{mediaId}}"]
+						}
+					}
+				}
+			]
+		}
+	]
+}
