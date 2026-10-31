@@ -38,9 +38,8 @@ const productoraSchema = new mongoose.Schema({
     versionKey: false
 });
 
-productoraSchema.pre('save', function (next) {
+productoraSchema.pre('save', function () {
     this.fechaActualizacion = new Date();
-    next();
 });
 
 module.exports = mongoose.model('Productora', productoraSchema);

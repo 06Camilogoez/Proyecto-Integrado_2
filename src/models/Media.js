@@ -64,9 +64,8 @@ const mediaSchema = new mongoose.Schema({
     versionKey: false
 });
 
-mediaSchema.pre('save', function (next) {
+mediaSchema.pre('save', function () {
     this.fechaActualizacion = new Date();
-    next();
 });
 
 module.exports = mongoose.model('Media', mediaSchema);

@@ -33,9 +33,8 @@ const generoSchema = new mongoose.Schema({
     versionKey: false
 });
 
-generoSchema.pre('save', function (next) {
+generoSchema.pre('save', function () {
     this.fechaActualizacion = new Date();
-    next();
 });
 
 module.exports = mongoose.model('Genero', generoSchema);

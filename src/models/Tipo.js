@@ -24,9 +24,8 @@ const tipoSchema = new mongoose.Schema({
     versionKey: false
 });
 
-tipoSchema.pre('save', function (next) {
+tipoSchema.pre('save', function () {
     this.fechaActualizacion = new Date();
-    next();
 });
 
 module.exports = mongoose.model('Tipo', tipoSchema);

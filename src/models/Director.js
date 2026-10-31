@@ -27,9 +27,8 @@ const directorSchema = new mongoose.Schema({
     versionKey: false
 });
 
-directorSchema.pre('save', function (next) {
+directorSchema.pre('save', function () {
     this.fechaActualizacion = new Date();
-    next();
 });
 
 module.exports = mongoose.model('Director', directorSchema);
